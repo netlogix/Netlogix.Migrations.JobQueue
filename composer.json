@@ -1,0 +1,28 @@
+{
+    "name": "netlogix/migrations-jobqueue",
+    "description": "Run netlogix/migrations asynchronously using flowpack/jobqueue",
+    "homepage": "http://websolutions.netlogix.de/",
+    "license": ["MIT"],
+    "type": "neos-package",
+    "require": {
+        "php": "^7.2",
+        "neos/flow": "^5.0 || ^6.0",
+        "netlogix/migrations": "^1.4",
+        "flowpack/jobqueue-common": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Netlogix\\Migrations\\JobQueue\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Netlogix\\Migrations\\JobQueue\\Tests\\": "Tests/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Netlogix.Migrations.JobQueue"
+        }
+    }
+}

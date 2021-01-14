@@ -1,0 +1,9 @@
+Netlogix:
+  Migrations:
+    JobQueue:
+
+      # Queue name used for running migrations, must be one of Flowpack.JobQueue.Common.queues
+      queueName: 'migrations'
+
+      # $options passed to Flowpack\JobQueue\Common\Job\JobManager::queue()
+      queueOptions: []
