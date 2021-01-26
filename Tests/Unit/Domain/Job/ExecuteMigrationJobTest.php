@@ -24,7 +24,7 @@ class ExecuteMigrationJobTest extends UnitTestCase
      */
     private $migrationService;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
