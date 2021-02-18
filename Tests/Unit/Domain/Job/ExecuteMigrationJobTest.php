@@ -6,7 +6,7 @@ namespace Netlogix\Migrations\JobQueue\Tests\Unit\Domain\Job;
 use Flowpack\JobQueue\Common\Queue\Message;
 use Flowpack\JobQueue\Common\Queue\QueueInterface;
 use Generator;
-use \InvalidArgumentException;
+use InvalidArgumentException;
 use Neos\Flow\Log\ThrowableStorageInterface;
 use Neos\Flow\Tests\UnitTestCase;
 use Netlogix\Migrations\Domain\Model\DefaultMigration;
@@ -191,6 +191,42 @@ class ExecuteMigrationJobTest extends UnitTestCase
         $job->initializeObject();
 
         $this->assertEquals(sprintf('Run async migration "foo" (Direction %s)', strtoupper($direction)), $job->getLabel());
+    }
+
+    /**
+     * @test
+     */
+    public function The_Job_is_serializable(): void
+    {
+        $job = new ExecuteMigrationJob('foo', 'up');
+        $convertedJob = unserialize(serialize($job));
+        self::assertInstanceOf(ExecuteMigrationJob::class, $convertedJob);
+        assert($convertedJob instanceof ExecuteMigrationJob);
+        self::assertEquals($job, $convertedJob);
+    }
+
+    /**
+     * @test
+     */
+    public function The_Job_initializes_the_migration_after_serialization(): void
+    {
+        $job = unserialize(serialize(new ExecuteMigrationJob('foo', 'up')));
+        $job->injectMigrationService($this->migrationService);
+
+        $this->migrationService
+            ->expects($this->once())
+            ->method('getMigrationByVersion')
+            ->with('foo')
+            ->willReturn(new class implements AsyncMigration {
+                public function up(): void
+                {
+                }
+
+                public function down(): void
+                {
+                }
+            });
+        $job->initializeObject();
     }
 
     public function provideDirections(): Generator

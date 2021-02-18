@@ -23,12 +23,12 @@ class ExecuteMigrationJob implements JobInterface
     /**
      * @var string
      */
-    private $migrationVersion;
+    protected $migrationVersion;
 
     /**
      * @var string
      */
-    private $direction;
+    protected $direction;
 
     /**
      * @var AsyncMigration
