@@ -22,13 +22,13 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-version: [7.4, 8.0, 8.1]
-                flow-version: [7.3, 8.0]
+                php-version: [7.4, 8.2]
+                flow-version: [7.3, 8.3]
 
                 exclude:
-                    # Disable Flow 8.0 on PHP 7, as 8.0 is required
+                    # Disable Flow 8.3 on PHP 7, as 8.0 is required
                     - php-version: 7.4
-                      flow-version: 8.0
+                      flow-version: 8.3
 
         env:
             FLOW_CONTEXT: Testing/Unit
@@ -70,7 +70,7 @@ jobs:
                   path: ${{ env.FLOW_DIST_FOLDER }}/DistributionPackages/Netlogix.Migrations.JobQueue
 
             - name: Install netlogix/migrations-jobqueue
-              run: composer require netlogix/migrations-jobqueue:@dev
+              run: composer require netlogix/migrations-jobqueue:dev-${{ github.ref_name }}
               working-directory: ${{ env.FLOW_DIST_FOLDER }}
 
             - name: Run tests
