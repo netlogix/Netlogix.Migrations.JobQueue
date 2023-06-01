@@ -45,7 +45,19 @@ jobs:
                       php-${{ matrix.php-versions }}-flow-${{ matrix.flow-versions }}-composer-
                       php-${{ matrix.php-versions }}-flow-
             - name: Install composer dependencies
-              run: composer create-project neos/flow-base-distribution ${{ env.FLOW_DIST_FOLDER }} --prefer-dist --no-progress "^${{ matrix.flow-versions }}"
+              run: composer create-project neos/flow-base-distribution ${{ env.FLOW_DIST_FOLDER }} --prefer-dist --no-progress --no-install "^${{ matrix.flow-versions }}"
+
+            - name: Allow neos composer plugin
+              run: composer config --no-plugins allow-plugins.neos/composer-plugin true
+              working-directory: ${{ env.FLOW_DIST_FOLDER }}
+
+            - name: Require behat in compatible version
+              run: composer require --dev --no-update "neos/behat:@dev"
+              working-directory: ${{ env.FLOW_DIST_FOLDER }}
+
+            - name: Install project
+              run: composer install
+              working-directory: ${{ env.FLOW_DIST_FOLDER }}
 
             - name: Checkout code
               uses: actions/checkout@v2
