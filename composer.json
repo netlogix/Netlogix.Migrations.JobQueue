@@ -5,8 +5,8 @@
     "license": ["MIT"],
     "type": "neos-package",
     "require": {
-        "php": "^8.2",
-        "neos/flow": "^8.3",
+        "php": "^7.4 || ^8.2",
+        "neos/flow": "^7.3 || ^8.3",
         "netlogix/migrations": "^2.0",
         "flowpack/jobqueue-common": "^3.3"
     },
