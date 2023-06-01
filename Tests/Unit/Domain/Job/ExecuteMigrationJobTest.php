@@ -14,13 +14,14 @@ use Netlogix\Migrations\Domain\Service\MigrationService;
 use Netlogix\Migrations\Error\UnknownMigration;
 use Netlogix\Migrations\JobQueue\Domain\Job\ExecuteMigrationJob;
 use Netlogix\Migrations\JobQueue\Domain\Model\AsyncMigration;
+use PHPUnit\Framework\MockObject\MockObject;
 use RuntimeException;
 
 class ExecuteMigrationJobTest extends UnitTestCase
 {
 
     /**
-     * @var MigrationService|\PHPUnit_Framework_MockObject_MockObject
+     * @var MigrationService|MockObject
      */
     private $migrationService;
 
@@ -229,7 +230,7 @@ class ExecuteMigrationJobTest extends UnitTestCase
         $job->initializeObject();
     }
 
-    public function provideDirections(): Generator
+    public static function provideDirections(): Generator
     {
         yield 'UP' => ['up'];
         yield 'DOWN' => ['down'];
@@ -247,7 +248,7 @@ class ExecuteMigrationJobTest extends UnitTestCase
     }
 
     /**
-     * @return AsyncMigration|\PHPUnit_Framework_MockObject_MockObject
+     * @return AsyncMigration|MockObject
      */
     private function setupAsyncMigrationMock()
     {
