@@ -5,7 +5,7 @@ on: [push, pull_request]
 
 jobs:
     unittests:
-        name: '[PHP ${{ matrix.php-versions }} | Flow ${{ matrix.flow-versions }}] Unit Tests'
+        name: '[PHP ${{ matrix.php-version }} | Flow ${{ matrix.flow-version }}] Unit Tests'
         runs-on: ubuntu-latest
         #    services:
         #      mariadb:
@@ -22,8 +22,13 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                php-versions: [7.2, 7.3, 7.4]
-                flow-versions: [5.3, 6.3]
+                php-version: [7.4, 8.0, 8.1]
+                flow-version: [7.3, 8.0]
+
+                exclude:
+                    # Disable Flow 8.0 on PHP 7, as 8.0 is required
+                    - php-version: 7.4
+                      flow-version: 8.0
 
         env:
             FLOW_CONTEXT: Testing/Unit
@@ -32,7 +37,7 @@ jobs:
         steps:
             - uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ matrix.php-versions }}
+                  php-version: ${{ matrix.php-version }}
                   extensions:  mbstring, xml, json, zlib, iconv, intl, pdo_sqlite, mysql
                   ini-values: opcache.fast_shutdown=0
 
@@ -40,12 +45,12 @@ jobs:
               uses: actions/cache@v1
               with:
                   path: ~/.composer/cache
-                  key: php-${{ matrix.php-versions }}-flow-${{ matrix.flow-versions }}-composer-${{ hashFiles('composer.json') }}
+                  key: php-${{ matrix.php-version }}-flow-${{ matrix.flow-version }}-composer-${{ hashFiles('composer.json') }}
                   restore-keys: |
-                      php-${{ matrix.php-versions }}-flow-${{ matrix.flow-versions }}-composer-
-                      php-${{ matrix.php-versions }}-flow-
+                      php-${{ matrix.php-version }}-flow-${{ matrix.flow-version }}-composer-
+                      php-${{ matrix.php-version }}-flow-
             - name: Install composer dependencies
-              run: composer create-project neos/flow-base-distribution ${{ env.FLOW_DIST_FOLDER }} --prefer-dist --no-progress --no-install "^${{ matrix.flow-versions }}"
+              run: composer create-project neos/flow-base-distribution ${{ env.FLOW_DIST_FOLDER }} --prefer-dist --no-progress --no-install "^${{ matrix.flow-version }}"
 
             - name: Allow neos composer plugin
               run: composer config --no-plugins allow-plugins.neos/composer-plugin true
