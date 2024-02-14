@@ -131,13 +131,13 @@ class AsyncMigrationHandlerTest extends UnitTestCase
         $handler->injectSettings(['anything' => 'but the queue name']);
     }
 
-    public function provideDirections(): Generator
+    public static function provideDirections(): Generator
     {
         yield 'UP' => ['up'];
         yield 'DOWN' => ['down'];
     }
 
-    public function provideInvalidMigrationClassNames(): \Generator
+    public static function provideInvalidMigrationClassNames(): \Generator
     {
         yield DefaultMigration::class => [DefaultMigration::class];
         yield Migration::class => [Migration::class];

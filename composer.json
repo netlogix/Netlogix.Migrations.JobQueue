@@ -5,10 +5,10 @@
     "license": ["MIT"],
     "type": "neos-package",
     "require": {
-        "php": "^7.2",
-        "neos/flow": "^5.0 || ^6.0",
-        "netlogix/migrations": "^1.4",
-        "flowpack/jobqueue-common": "^3.0"
+        "php": "^7.4 || ^8.2",
+        "neos/flow": "^7.3 || ^8.3",
+        "netlogix/migrations": "^2.0",
+        "flowpack/jobqueue-common": "^3.3"
     },
     "autoload": {
         "psr-4": {
