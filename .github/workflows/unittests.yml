@@ -70,7 +70,7 @@ jobs:
                   path: ${{ env.FLOW_DIST_FOLDER }}/DistributionPackages/Netlogix.Migrations.JobQueue
 
             - name: Install netlogix/migrations-jobqueue
-              run: composer require netlogix/migrations-jobqueue:dev-${{ github.ref_name }}
+              run: composer require netlogix/migrations-jobqueue:@dev
               working-directory: ${{ env.FLOW_DIST_FOLDER }}
 
             - name: Run tests
