@@ -91,8 +91,10 @@ class AsyncMigrationHandlerTest extends UnitTestCase
             'queueName' => 'fooQueue'
         ]);
 
+        $version = (string)rand(20210000000000, 20220000000000);
+
         $migration = self::getMockBuilder(AsyncMigration::class)
-            ->setMockClassName('Version20210114162911')
+            ->setMockClassName('Version' . $version)
             ->getMock();
 
         $jobManager = self::getMockBuilder(JobManager::class)
@@ -100,7 +102,7 @@ class AsyncMigrationHandlerTest extends UnitTestCase
             ->getMock();
 
         $expectedJob = new ExecuteMigrationJob(
-            '20210114162911',
+            $version,
             $direction
         );
 
